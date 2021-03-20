@@ -43,3 +43,28 @@
     В этом примере ваш пользователь **root** использует аутентификацию с помощью плагина auth_socket. Для изменения этой настройки на использование пароля используйте следующую команду ALTER USER. Не забудьте изменить `password` на ваш сильный пароль:
     
     mysql> `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';`
+
++ Далее выполните команду `FLUSH PRIVILEGES`, которая применит внесённые изменения:
+
+    mysql> `FLUSH PRIVILEGES;`
+
++ Проверьте методы авторизации для пользователей ещё раз для того, чтобы убедиться, что пользователь root более не использует плагин auth_socket для авторизации:
+
+    mysql> `SELECT user,authentication_string,plugin,host FROM mysql.user;`
+
+    ```
+    Вывод
+    +------------------+-------------------------------------------+-----------------------+-----------+
+    | user             | authentication_string                     | plugin                | host      |
+    +------------------+-------------------------------------------+-----------------------+-----------+
+    | root             | *3636DACC8616D997782ADD0839F92C1571D6D78F | mysql_native_password | localhost |
+    | mysql.session    | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost |
+    | mysql.sys        | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost |
+    | debian-sys-maint | *CC744277A401A7D25BE1CA89AFF17BF607F876FF | mysql_native_password | localhost |
+    +------------------+-------------------------------------------+-----------------------+-----------+
+    4 rows in set (0.00 sec)
+    ```
+
+    > Как можно видеть на представленном выводе теперь root пользователь MySQL аутентифицируется с использованием пароля. После того, как мы в этом убедились, можно выйти из оболочки MySQL:
+
+    mysql> `exit`
