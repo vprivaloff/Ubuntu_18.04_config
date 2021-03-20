@@ -1,17 +1,4 @@
-# ubuntu-18.04_config
-## Тонкая настройка
-
-### 1. Настройка брандмауэра (ufw)
-
-+ Разрешаем доступ к порту 2203
-
-    `sudo ufw allow 2203`
-
-+ Разрешаем доступ HTTP/HTTPS (port 80,443)
-
-    `sudo ufw allow proto tcp from any to any port 80,443`
-
-###  2. Установка MySQL
+###  Установка MySQL
 
 + Обновить индекс пакетов
 
@@ -21,7 +8,7 @@
 
     `sudo apt install mysql-server`
     
-###  3. Настройка MySQL
+###  Настройка MySQL
 
 + Выполнить скрипт безопасности командой:
 
