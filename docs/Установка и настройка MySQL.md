@@ -158,6 +158,11 @@
 + Первое что потребуется это конвертировать ключ OpenSSH в *.ppk (так как не все программы могут использовать OpenSSH)
 
 + Настройки для программы HeidiSQL (как пример)
-
-[heidi-1]: https://github.com/vprivaloff/Ubuntu_18.04_config/blob/main/docs/img/heidi-1.png
-[heidi-2]: https://github.com/vprivaloff/Ubuntu_18.04_config/blob/main/docs/img/heidi-2.png
+    
+    ![alt-текст][heidi-1]
+    
+    ![alt-текст][heidi-2]
+    
+    [heidi-1]: https://github.com/vprivaloff/Ubuntu_18.04_config/blob/main/docs/img/heidi-1.png
+    
+    [heidi-2]: https://github.com/vprivaloff/Ubuntu_18.04_config/blob/main/docs/img/heidi-2.png
