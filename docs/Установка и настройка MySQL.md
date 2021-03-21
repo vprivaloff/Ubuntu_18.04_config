@@ -68,3 +68,92 @@
     > Как можно видеть на представленном выводе теперь root пользователь MySQL аутентифицируется с использованием пароля. После того, как мы в этом убедились, можно выйти из оболочки MySQL:
 
     mysql> `exit`
+    
+###  Безопасность MySQL
+
+В некоторых случаях бывает полезно использовать для 
+входа в MySQL отдельного пользователя. 
+Для создания такого пользователя войдите в оболочку MySQL:
+
+`sudo mysql -u root -p`
+
++ Создание пользователя
+
+    `CREATE USER 'admin'@'localhost' IDENTIFIED BY 'pass_word';`
+    
++ Предоставление все прав для пользователя
+
+    `GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;`
+
++ Можно выйти из оболчки
+
+    `exit`
+    
++ Открыть файл на редактирование `/etc/mysql/mysql.conf.d/mysqld.cnf` установить значения
+
+    ```
+    port: 2508
+    bind-address = 127.0.0.1
+    local-infile = 0
+    ```
++ Изменить стандатный логин **root**
+    * войти в оболочку:
+    
+        `sudo mysql -u root -p`
+        
+    * выполнить команду
+    
+        `rename user 'root'@'localhost' to 'ROOT12345'@'localhost';`
+        
+>Внимание: после изменения root на ROOT12345 вход в оболочку mysql необходимо выполнять при помощи команды
+
+    `mysql -u ROOT1234 -p`
+    
+###  Тестирование MySQL
+
++ Выполнить команду
+
+    `systemctl status mysql.service`
+    
+    >Вы увидите вывод, похожий на этот:
+    ```
+    Вывод
+    ● mysql.service - MySQL Community Server
+       Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: en
+       Active: active (running) since Wed 2020-04-23 21:21:25 UTC; 30min ago
+     Main PID: 3754 (mysqld)
+        Tasks: 28
+       Memory: 142.3M
+          CPU: 1.994s
+       CGroup: /system.slice/mysql.service
+               └─3754 /usr/sbin/mysqld
+    ```
+  
+### Создание базы данным и назначение пользователя
+
++ Войти в оболочку mysql
++ Выполнить команду
+    
+    `create database TestDB;`
+    
++ Создать нового пользователя для управления новой базой
+
+    `CREATE USER 'TestDB'@'localhost' IDENTIFIED BY 'password';`
+    
++ Установить права для управления базой
+
+    `GRANT ALL ON TestDB.* TO 'TestDB'@'localhost';`
+    
+    `FLUSH PRIVILEGES;`
+    
++ Посмотреть права можно при помощи команды:
+
+    `show grants for 'TestDB'@'localhost';`
+    
+### Создание подключения через туннель SSH
+
+Так как мы изменили стандартный порт подключения с 3306 на 2508 в целях дополнительной защиты
+подключаться будем через него
+
++ Первое что потребуется это конвертировать ключ OpenSSH в *.ppk (так как не все программы могут использовать OpenSSH)
+
