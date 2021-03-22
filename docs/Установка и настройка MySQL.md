@@ -231,7 +231,7 @@
     >содержимое каталога в точку монтирования, а 
     >не переносить его в содержащий `mysql` каталог:
     
-    `sudo rsync -av /var/lib/mysql /qwe/new-my-cat`
+    `sudo rsync -av /var/lib/mysql /mnt/new-my-cat`
     
     После `rsync` завершения переименуйте 
     текущую папку с расширением `.bak` и 
@@ -258,7 +258,7 @@
     
     ```
       . . .
-      datadir=/qwe/new-my-cat/mysql
+      datadir=/mnt/new-my-cat/mysql
       . . .
     ```
 
@@ -276,7 +276,7 @@
 
 ```
 . . .
-alias /var/lib/mysql/ -> /qwe/new-my-cat/mysql/,
+alias /var/lib/mysql/ -> /mnt/new-my-cat/mysql/,
 . . .
 ```
 Чтобы изменения вступили в силу, перезапустите AppArmor:
@@ -342,7 +342,7 @@ Output
 +----------------------------+
 | @@datadir                  |
 +----------------------------+
-| /qwe/new-my-cat/mysql/     |
+| /mnt/new-my-cat/mysql/     |
 +----------------------------+
 1 row in set (0.01 sec)
 ```
@@ -365,4 +365,4 @@ Output
 
 `sudo systemctl status mysql`
 
-На этом перенос директории mysql можно считать законченым.
+На этом перенос директории mysql можно считать завершенным.
